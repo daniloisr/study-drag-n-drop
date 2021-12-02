@@ -1,0 +1,3 @@
+[submodule "react-beautiful-dnd"]
+	path = react-beautiful-dnd
+	url = git@github.com:atlassian/react-beautiful-dnd.git
