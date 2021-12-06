@@ -36,7 +36,7 @@ const getListStyle = () => ({
   width: 250
 });
 
-function App() {
+function Dnd() {
   const [items, setItems] = useState(getItems(10))
   const onDragEnd = (result) => {
     // dropped outside the list
@@ -98,4 +98,4 @@ function App() {
   );
 }
 
-export default App;
+export default Dnd;
