@@ -30,8 +30,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   background: isDragging ? "lightgreen" : "grey",
 
   // styles we need to apply on draggables
-  ...draggableStyle,
-  // transform: 'none !important',
+  ...(isDragging ? draggableStyle : {}),
 });
 
 const getListStyle = isDraggingOver => ({
@@ -59,23 +58,21 @@ function App() {
 
   return (
     <div className="App">
-      <DragDropContext onDragEnd={onDragEnd}>>
-        <Droppable
-          droppableId="droppable"
-          // renderClone={(provided, snapshot, rubric) => (
-          //   <div
-          //     {...provided.draggableProps}
-          //     {...provided.dragHandleProps}
-          //     ref={provided.innerRef}
-          //     style={getItemStyle(
-          //       snapshot.isDragging,
-          //       provided.draggableProps.style
-          //     )}
-          //   >
-          //     Item id: {items[rubric.source.index].id}
-          //   </div>
-          // )}
-        >
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable">
+          {/*renderClone={(provided, snapshot, rubric) => (*/}
+          {/*  <div*/}
+          {/*    {...provided.draggableProps}*/}
+          {/*    {...provided.dragHandleProps}*/}
+          {/*    ref={provided.innerRef}*/}
+          {/*    style={getItemStyle(*/}
+          {/*      snapshot.isDragging,*/}
+          {/*      provided.draggableProps.style*/}
+          {/*    )}*/}
+          {/*  >*/}
+          {/*    Item id: {items[rubric.source.index].id}*/}
+          {/*  </div>*/}
+          {/*)}>*/}
           {(provided, snapshot) => (
             <div
               {...provided.droppableProps}
@@ -85,21 +82,32 @@ function App() {
               {items.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
+                    <div>
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={getItemStyle(
+                          snapshot.isDragging,
+                          provided.draggableProps.style,
+                        )}
+                      >
+                        {item.content}
+                      </div>
+                      {snapshot.isDragging && (
+                        <div
+                          style={getItemStyle(
+                            false,
+                            provided.draggableProps.style,
+                          )}
+                        >
+                          {item.content}
+                        </div>
                       )}
-                    >
-                      {item.content}
                     </div>
                   )}
                 </Draggable>
               ))}
-              {provided.placeholder}
             </div>
           )}
         </Droppable>
