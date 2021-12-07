@@ -78,13 +78,12 @@ const Icon = styled.span`
 function Item({
                 item,
                 onExpand,
-                depth,
                 onCollapse,
                 provided,
                 snapshot,
               }: RenderItemParams) {
   const toggle = item.isExpanded ? onCollapse : onExpand
-  const onClick = item.data.type === 'section' ? toggle : (id: any) => {}
+  const onClick = item.data.type === 'section' ? toggle : () => {}
 
   return (
     <ItemWrapper
