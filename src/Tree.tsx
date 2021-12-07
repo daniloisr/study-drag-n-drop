@@ -95,6 +95,7 @@ const CaratBtn = styled.button<{ isExpanded?: boolean }>`
   border: none;
   background: none;
   cursor: pointer;
+  transition: transform 0.1s;
   transform: ${props => !props.isExpanded ? 'rotate(-90deg)' : 1};
 `
 
