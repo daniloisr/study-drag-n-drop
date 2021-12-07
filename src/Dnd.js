@@ -24,14 +24,13 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: "none",
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
-  background: "grey",
+  background: "lightblue",
 
   ...(isDragging ? draggableStyle : {}),
   opacity: isDragging ? 0.25 : 1,
 });
 
 const getListStyle = () => ({
-  background: "lightgrey",
   padding: grid,
   width: 250
 });
