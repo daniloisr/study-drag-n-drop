@@ -1,32 +1,50 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react'
+import styled from 'styled-components'
 import Tree, {
   mutateTree,
   moveItemOnTree,
   RenderItemParams,
   TreeItem,
-  TreeData,
   ItemId,
   TreeSourcePosition,
   TreeDestinationPosition,
-} from '@atlaskit/tree';
-import { tree, designTree } from './treeData'
+} from '@atlaskit/tree'
+import { dataTree } from './dataTree'
 import { ReactComponent as Carat } from './carat.svg'
 
 const Container = styled.div`
   display: flex;
-`;
+`
 
-const Item = styled.div`
+const ItemContainer = styled.div`
   display: flex;
   border: 1px solid black;
   margin: 2px;
-  opacity: ${(props: any) => props.dragging ? '0.25' : '1'}
+  opacity: ${(props: any) => props.dragging ? '0.25' : '1'};
 `
 
-type State = {
-  tree: TreeData;
-};
+function Item({
+                item,
+                onExpand,
+                onCollapse,
+                provided,
+                snapshot,
+              }: RenderItemParams) {
+  return (
+    <ItemContainer ref={provided.innerRef}
+         dragging={snapshot.isDragging}
+         {...provided.draggableProps}
+         {...provided.dragHandleProps}
+    >
+      <StyledIcon
+        item={item}
+        onExpand={onExpand}
+        onCollapse={onCollapse}
+      />
+      {item.data.title}
+    </ItemContainer>
+  )
+}
 
 function Icon({item, onExpand, onCollapse, className}: {
   item: TreeItem,
@@ -34,13 +52,9 @@ function Icon({item, onExpand, onCollapse, className}: {
   onCollapse: (itemId: ItemId) => void,
   className?: string,
 }) {
-  if (!item.children || item.children.length === 0) {
-    return null
-  }
+  if (!item.children || item.children.length === 0) return null
 
-  const onClick = () => {
-    item.isExpanded ? onCollapse(item.id) : onExpand(item.id)
-  }
+  const onClick = () => (item.isExpanded ? onCollapse : onExpand)(item.id)
 
   return (
     <button onClick={onClick} className={className}>
@@ -54,81 +68,40 @@ const StyledIcon = styled(Icon)`
   background: none;
 `
 
-export default class DragDropWithNestingTree extends Component<void, State> {
-  state = {
-    tree: designTree,
-  };
+export default function HandbookIndex() {
+  const [tree, setTree] = useState(dataTree)
 
-  renderItem = ({
-                  item,
-                  onExpand,
-                  onCollapse,
-                  provided,
-                  snapshot,
-                }: RenderItemParams) => {
-    // console.log(provided.draggableProps)
-    return (
-      <Item ref={provided.innerRef}
-            dragging={snapshot.isDragging}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-      >
-        <StyledIcon
-          item={item}
-          onExpand={onExpand}
-          onCollapse={onCollapse}
-        />
-        {item.data.title}
-      </Item>
-    );
-  };
+  const onExpand = (itemId: ItemId) => {
+    setTree(mutateTree(tree, itemId, {isExpanded: true}))
+  }
 
-  onExpand = (itemId: ItemId) => {
-    const {tree}: State = this.state;
-    this.setState({
-      tree: mutateTree(tree, itemId, {isExpanded: true}),
-    });
-  };
+  const onCollapse = (itemId: ItemId) => {
+    setTree(mutateTree(tree, itemId, {isExpanded: false}))
+  }
 
-  onCollapse = (itemId: ItemId) => {
-    const {tree}: State = this.state;
-    this.setState({
-      tree: mutateTree(tree, itemId, {isExpanded: false}),
-    });
-  };
-
-  onDragEnd = (
+  const onDragEnd = (
     source: TreeSourcePosition,
     destination?: TreeDestinationPosition,
   ) => {
-    const {tree} = this.state;
-
     if (!destination) {
-      return;
+      return
     }
 
     // console.log(source, destination)
-    const newTree = moveItemOnTree(tree, source, destination);
-    this.setState({
-      tree: newTree,
-    });
-  };
-
-  render() {
-    const {tree} = this.state;
-
-    return (
-      <Container>
-        <Tree
-          tree={tree}
-          renderItem={this.renderItem}
-          onExpand={this.onExpand}
-          onCollapse={this.onCollapse}
-          onDragEnd={this.onDragEnd}
-          isDragEnabled
-          isNestingEnabled
-        />
-      </Container>
-    );
+    setTree(moveItemOnTree(tree, source, destination))
   }
+
+  return (
+    <Container>
+      <Tree
+        tree={tree}
+        renderItem={Item}
+        onExpand={onExpand}
+        onCollapse={onCollapse}
+        onDragEnd={onDragEnd}
+        isDragEnabled
+        isNestingEnabled
+      />
+    </Container>
+  )
 }

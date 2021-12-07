@@ -1,4 +1,4 @@
-import { toTree } from './treeData'
+import { toTree } from 'src/dataTree'
 
 test('parse data structure', () => {
   const res = toTree([

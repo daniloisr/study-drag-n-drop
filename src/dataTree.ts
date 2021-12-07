@@ -84,9 +84,9 @@ export function toTree(nodes: Node[]): TreeData {
   }
 }
 
-export const designTree = toTree(nodes)
+export const dataTree = toTree(nodes)
 
-export const tree = {
+export const sampleTree = {
   "rootId": "1",
   "items": {
     "1": {
