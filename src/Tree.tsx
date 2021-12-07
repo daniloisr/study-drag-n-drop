@@ -17,13 +17,16 @@ const Container = styled.div`
   min-height: 500px;
 `
 
-const ItemContainer = styled.div<{ dragging: boolean }>`
+const ItemContainer = styled.div<{ dragging: boolean, isExpanded?: boolean }>`
   display: flex;
   margin: 2px;
   padding: 6px 20px;
   opacity: ${props => props.dragging ? '0.25' : '1'};
   &&:hover {
     background: #F7F8F9;
+    .carat {
+      opacity: 1;
+    }
   }
   &&.section {
     padding-left: 40px;
@@ -35,6 +38,16 @@ const ItemContainer = styled.div<{ dragging: boolean }>`
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: #A3AAB8;
+    
+    .carat {
+      opacity: ${props => props.isExpanded ? 0 : 1};
+    }
+    
+    &&:hover {
+      .carat {
+        opacity: 1;
+      }
+    }
   }
 `
 
@@ -63,6 +76,7 @@ function Item({
       <ItemContainer
         dragging={snapshot.isDragging}
         className={item.data.type}
+        isExpanded={item.isExpanded}
       >
         <Carat
           item={item}
@@ -76,26 +90,26 @@ function Item({
   )
 }
 
-const CaratBtn = styled.button`
+const CaratBtn = styled.button<{ isExpanded?: boolean }>`
   margin-left: -20px;
   border: none;
   background: none;
   cursor: pointer;
+  transform: ${props => !props.isExpanded ? 'rotate(-90deg)' : 1};
 `
 
-function Carat({item, onExpand, onCollapse, className}: {
+function Carat({item, onExpand, onCollapse}: {
   item: TreeItem,
   onExpand: (itemId: ItemId) => void,
   onCollapse: (itemId: ItemId) => void,
-  className?: string,
 }) {
   if (!item.children || item.children.length === 0) return null
 
   const onClick = () => (item.isExpanded ? onCollapse : onExpand)(item.id)
 
   return (
-    <CaratBtn onClick={onClick} className={className}>
-      <CaratIcon style={!item.isExpanded ? {transform: 'rotate(-90deg)'} : {}}/>
+    <CaratBtn onClick={onClick} className="carat" isExpanded={item.isExpanded}>
+      <CaratIcon />
     </CaratBtn>
   )
 }
