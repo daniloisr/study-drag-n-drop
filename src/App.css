@@ -1,11 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 
-.App {
-  text-align: center;
+#root {
   font-family: Inter, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
-  color: #757C8A;
 }

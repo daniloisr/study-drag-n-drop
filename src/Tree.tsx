@@ -12,7 +12,16 @@ import Tree, {
 import { dataTree } from './dataTree'
 import { ReactComponent as CaratIcon } from './carat.svg'
 
-const Container = styled.div`
+const MainContainer = styled.div<{ alignSections?: boolean }>`
+  display: flex;
+  margin: 1em;
+  
+  .section {
+    padding-left: ${props => props.alignSections ? '40px' : '20px'};
+  }
+`
+
+const TreeContainer = styled.div`
   display: flex;
   min-height: 500px;
   overflow-y: auto;
@@ -24,12 +33,20 @@ const ItemWrapper = styled.div`
   &&:hover {
     background: #F7F8F9;
   }
+  
+  && + && div.section {
+    margin-top: 1em;
+  }
 `
 
 const ItemContainer = styled.div<{ dragging: boolean, isExpanded?: boolean }>`
   display: flex;
-  margin: 2px;
-  padding: 6px 20px;
+  box-sizing: border-box;
+  align-items: center;
+  height: 28px;
+  margin: 1px;
+  padding: 4px 20px;
+  color: #757C8A;
   opacity: ${props => props.dragging ? '0.25' : '1'};
   
   &&.section {
@@ -125,6 +142,7 @@ function Carat({item, onExpand, onCollapse}: {
 
 export default function TreeApp() {
   const [tree, setTree] = useState(dataTree)
+  const [alignSections, setAlignSections] = useState(false)
 
   const onExpand = (itemId: ItemId) => {
     setTree(mutateTree(tree, itemId, {isExpanded: true}))
@@ -146,16 +164,32 @@ export default function TreeApp() {
   }
 
   return (
-    <Container>
-      <Tree
-        tree={tree}
-        renderItem={Item}
-        onExpand={onExpand}
-        onCollapse={onCollapse}
-        onDragEnd={onDragEnd}
-        isDragEnabled
-        isNestingEnabled
-      />
-    </Container>
+    <MainContainer alignSections={alignSections}>
+      <TreeContainer>
+        <Tree
+          tree={tree}
+          renderItem={Item}
+          onExpand={onExpand}
+          onCollapse={onCollapse}
+          onDragEnd={onDragEnd}
+          isDragEnabled
+          isNestingEnabled
+        />
+      </TreeContainer>
+
+      <div style={{ marginLeft: '5em' }}>
+        <p>
+          Based on <a href="https://atlaskit.atlassian.com/packages/confluence/tree">@atlaskit/tree</a>, which is referenced
+          on <a href="https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/guides/combining.md">React Beautiful DnD docs</a>
+        </p>
+
+        <h3>Settings</h3>
+
+        <p>
+          <input type="checkbox" checked={alignSections} onChange={() => setAlignSections(!alignSections)} />
+          Change Sections alignment
+        </p>
+      </div>
+    </MainContainer>
   )
 }
