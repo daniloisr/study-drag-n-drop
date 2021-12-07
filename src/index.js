@@ -4,6 +4,7 @@ import './index.css';
 import Dnd from './Dnd';
 import Tree from './Tree';
 import reportWebVitals from './reportWebVitals';
+import './App.css';
 
 const Router = () => {
   const [app, setApp] = useState(null)
@@ -20,7 +21,7 @@ const Router = () => {
     return () => window.removeEventListener('popstate', listener)
   }, [])
 
-  return <>{app}</>
+  return <div className="App">{app}</div>
 }
 
 ReactDOM.render(

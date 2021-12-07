@@ -10,43 +10,64 @@ import Tree, {
   TreeDestinationPosition,
 } from '@atlaskit/tree'
 import { dataTree } from './dataTree'
-import { ReactComponent as Carat } from './carat.svg'
+import { ReactComponent as CaratIcon } from './carat.svg'
 
 const Container = styled.div`
   display: flex;
+  min-height: 500px;
 `
 
 const ItemContainer = styled.div`
   display: flex;
-  border: 1px solid black;
   margin: 2px;
+  padding: 6px 20px;
   opacity: ${(props: any) => props.dragging ? '0.25' : '1'};
+  &&:hover {
+    background: #F7F8F9;
+  }
+`
+
+const Icon = styled.span`
+  margin-right: 6px;
 `
 
 function Item({
                 item,
                 onExpand,
+                depth,
                 onCollapse,
                 provided,
                 snapshot,
               }: RenderItemParams) {
   return (
     <ItemContainer ref={provided.innerRef}
-         dragging={snapshot.isDragging}
-         {...provided.draggableProps}
-         {...provided.dragHandleProps}
+                   dragging={snapshot.isDragging}
+                   {...provided.draggableProps}
+                   {...provided.dragHandleProps}
+                   style={{
+                     ...provided.draggableProps.style,
+                     paddingLeft: `${(depth + 1) * 20 + 5}px`
+                   }}
     >
-      <StyledIcon
+      <Carat
         item={item}
         onExpand={onExpand}
         onCollapse={onCollapse}
       />
+      {item.data.icon && <Icon>{item.data.icon}</Icon>}
       {item.data.title}
     </ItemContainer>
   )
 }
 
-function Icon({item, onExpand, onCollapse, className}: {
+const CaratBtn = styled.button`
+  margin-left: -20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+`
+
+function Carat({item, onExpand, onCollapse, className}: {
   item: TreeItem,
   onExpand: (itemId: ItemId) => void,
   onCollapse: (itemId: ItemId) => void,
@@ -57,16 +78,12 @@ function Icon({item, onExpand, onCollapse, className}: {
   const onClick = () => (item.isExpanded ? onCollapse : onExpand)(item.id)
 
   return (
-    <button onClick={onClick} className={className}>
-      <Carat style={!item.isExpanded ? {transform: 'rotate(-90deg)'} : {}}/>
-    </button>
+    <CaratBtn onClick={onClick} className={className}>
+      <CaratIcon style={!item.isExpanded ? {transform: 'rotate(-90deg)'} : {}}/>
+    </CaratBtn>
   )
 }
 
-const StyledIcon = styled(Icon)`
-  border: none;
-  background: none;
-`
 
 export default function HandbookIndex() {
   const [tree, setTree] = useState(dataTree)
