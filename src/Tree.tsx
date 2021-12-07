@@ -123,7 +123,7 @@ function Carat({item, onExpand, onCollapse}: {
 }
 
 
-export default function HandbookIndex() {
+export default function TreeApp() {
   const [tree, setTree] = useState(dataTree)
 
   const onExpand = (itemId: ItemId) => {
