@@ -56,6 +56,39 @@ const nodes = [
     type: 'doc',
     parent: 4,
   },
+  {
+    id: 8,
+    title: 'PEOPLE',
+    type: 'section',
+    parent: null,
+  },
+  {
+    id: 9,
+    title: 'OTHER',
+    type: 'section',
+    parent: null,
+  },
+  {
+    id: 10,
+    title: 'Swag',
+    icon: '🗳',
+    type: 'doc',
+    parent: 9,
+  },
+  {
+    id: 11,
+    title: 'A better remote work setup',
+    icon: '🖥',
+    type: 'doc',
+    parent: 9,
+  },
+  {
+    id: 12,
+    title: 'Todo list for remote teams',
+    icon: '☎️',
+    type: 'doc',
+    parent: 9,
+  },
 ]
 
 export function toTree(nodes: Node[]): TreeData {
