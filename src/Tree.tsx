@@ -17,13 +17,24 @@ const Container = styled.div`
   min-height: 500px;
 `
 
-const ItemContainer = styled.div`
+const ItemContainer = styled.div<{ dragging: boolean }>`
   display: flex;
   margin: 2px;
   padding: 6px 20px;
-  opacity: ${(props: any) => props.dragging ? '0.25' : '1'};
+  opacity: ${props => props.dragging ? '0.25' : '1'};
   &&:hover {
     background: #F7F8F9;
+  }
+  &&.section {
+    padding-left: 40px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #A3AAB8;
   }
 `
 
@@ -40,23 +51,28 @@ function Item({
                 snapshot,
               }: RenderItemParams) {
   return (
-    <ItemContainer ref={provided.innerRef}
-                   dragging={snapshot.isDragging}
-                   {...provided.draggableProps}
-                   {...provided.dragHandleProps}
-                   style={{
-                     ...provided.draggableProps.style,
-                     paddingLeft: `${(depth + 1) * 20 + 5}px`
-                   }}
+    <div
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+      style={{
+        ...provided.draggableProps.style,
+        paddingLeft: `${(depth + 1) * 20}px`
+      }}
     >
-      <Carat
-        item={item}
-        onExpand={onExpand}
-        onCollapse={onCollapse}
-      />
-      {item.data.icon && <Icon>{item.data.icon}</Icon>}
-      {item.data.title}
-    </ItemContainer>
+      <ItemContainer
+        dragging={snapshot.isDragging}
+        className={item.data.type}
+      >
+        <Carat
+          item={item}
+          onExpand={onExpand}
+          onCollapse={onCollapse}
+        />
+        {item.data.icon && <Icon>{item.data.icon}</Icon>}
+        {item.data.title}
+      </ItemContainer>
+    </div>
   )
 }
 
