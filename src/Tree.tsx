@@ -91,10 +91,6 @@ function Item({
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
-      style={{
-        ...provided.draggableProps.style,
-        paddingLeft: `${depth * 20}px`
-      }}
       onClick={() => onClick(item.id)}
     >
       <ItemContainer
@@ -173,6 +169,7 @@ export default function TreeApp() {
           onExpand={onExpand}
           onCollapse={onCollapse}
           onDragEnd={onDragEnd}
+          offsetPerLevel={20}
           isDragEnabled
           isNestingEnabled
         />
