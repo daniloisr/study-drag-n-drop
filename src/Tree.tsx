@@ -114,10 +114,11 @@ function Item({
   )
 }
 
-const CaratBtn = styled.button<{ isExpanded?: boolean }>`
+const CaratBtn = styled.div<{ isExpanded?: boolean }>`
+  width: 20px;
+  height: 20px;
+  text-align: center;
   margin-left: -20px;
-  border: none;
-  background: none;
   cursor: pointer;
   transition: transform 0.1s;
   transform: ${props => !props.isExpanded ? 'rotate(-90deg)' : 1};
