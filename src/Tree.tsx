@@ -15,6 +15,7 @@ import { ReactComponent as CaratIcon } from './carat.svg'
 const Container = styled.div`
   display: flex;
   min-height: 500px;
+  overflow-y: auto;
 `
 
 const ItemWrapper = styled.div`
