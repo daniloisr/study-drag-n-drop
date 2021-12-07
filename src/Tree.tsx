@@ -17,19 +17,18 @@ const Container = styled.div`
   min-height: 500px;
 `
 
+const ItemWrapper = styled.div`
+  &&:hover {
+    background: #F7F8F9;
+  }
+`
+
 const ItemContainer = styled.div<{ dragging: boolean, isExpanded?: boolean }>`
   display: flex;
   margin: 2px;
   padding: 6px 20px;
   opacity: ${props => props.dragging ? '0.25' : '1'};
-  &&:hover {
-    background: #F7F8F9;
-    .carat {
-      opacity: 1;
-    }
-  }
   &&.section {
-    padding-left: 40px;
     font-family: Inter;
     font-style: normal;
     font-weight: 500;
@@ -64,13 +63,13 @@ function Item({
                 snapshot,
               }: RenderItemParams) {
   return (
-    <div
+    <ItemWrapper
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
       style={{
         ...provided.draggableProps.style,
-        paddingLeft: `${(depth + 1) * 20}px`
+        paddingLeft: `${depth * 20}px`
       }}
     >
       <ItemContainer
@@ -86,7 +85,7 @@ function Item({
         {item.data.icon && <Icon>{item.data.icon}</Icon>}
         {item.data.title}
       </ItemContainer>
-    </div>
+    </ItemWrapper>
   )
 }
 
