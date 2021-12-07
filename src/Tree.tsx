@@ -19,6 +19,8 @@ const Container = styled.div`
 `
 
 const ItemWrapper = styled.div`
+  min-width: 300px;
+  
   &&:hover {
     background: #F7F8F9;
   }
@@ -29,6 +31,7 @@ const ItemContainer = styled.div<{ dragging: boolean, isExpanded?: boolean }>`
   margin: 2px;
   padding: 6px 20px;
   opacity: ${props => props.dragging ? '0.25' : '1'};
+  
   &&.section {
     font-family: Inter;
     font-style: normal;
@@ -63,6 +66,9 @@ function Item({
                 provided,
                 snapshot,
               }: RenderItemParams) {
+  const toggle = item.isExpanded ? onCollapse : onExpand
+  const onClick = item.data.type === 'section' ? toggle : (id: any) => {}
+
   return (
     <ItemWrapper
       ref={provided.innerRef}
@@ -72,6 +78,7 @@ function Item({
         ...provided.draggableProps.style,
         paddingLeft: `${depth * 20}px`
       }}
+      onClick={() => onClick(item.id)}
     >
       <ItemContainer
         dragging={snapshot.isDragging}
@@ -110,7 +117,7 @@ function Carat({item, onExpand, onCollapse}: {
 
   return (
     <CaratBtn onClick={onClick} className="carat" isExpanded={item.isExpanded}>
-      <CaratIcon />
+      <CaratIcon/>
     </CaratBtn>
   )
 }
