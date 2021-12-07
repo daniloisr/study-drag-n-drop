@@ -133,7 +133,6 @@ export default function HandbookIndex() {
       return
     }
 
-    // console.log(source, destination)
     setTree(moveItemOnTree(tree, source, destination))
   }
 
