@@ -1,100 +1,100 @@
 import { TreeData, TreeItem } from '@atlaskit/tree'
 
 interface Node {
-  id: number,
+  id: string,
   title: string,
   type: string,
-  parent: number | null
+  parent: string | null
 }
 
 const nodes = [
   {
-    id: 1,
+    id: '1',
     title: 'GENERAL',
     type: 'section',
     parent: null,
   },
   {
-    id: 2,
+    id: '2',
     title: 'Values',
     icon: '🏢',
     type: 'doc',
-    parent: 1,
+    parent: '1',
   },
   {
-    id: 3,
+    id: '3',
     title: 'Communication',
     icon: '💬',
     type: 'doc',
-    parent: 2,
+    parent: '2',
   },
   {
-    id: 4,
+    id: '4',
     title: 'Remote',
     icon: '📄',
     type: 'doc',
-    parent: 2,
+    parent: '2',
   },
   {
-    id: 5,
+    id: '5',
     title: 'Expectations',
     icon: '🛠',
     type: 'doc',
-    parent: 4,
+    parent: '4',
   },
   {
-    id: 6,
+    id: '6',
     title: 'Working Async',
     icon: '🔄',
     type: 'doc',
-    parent: 4,
+    parent: '4',
   },
   {
-    id: 7,
+    id: '7',
     title: 'Glossary',
     icon: '🔗',
     type: 'doc',
-    parent: 4,
+    parent: '4',
   },
   {
-    id: 8,
+    id: '8',
     title: 'PEOPLE',
     type: 'section',
     parent: null,
   },
   {
-    id: 9,
+    id: '9',
     title: 'OTHER',
     type: 'section',
     parent: null,
   },
   {
-    id: 10,
+    id: '10',
     title: 'Swag',
     icon: '🗳',
     type: 'doc',
-    parent: 9,
+    parent: '9',
   },
   {
-    id: 11,
+    id: '11',
     title: 'A better remote work setup',
     icon: '🖥',
     type: 'doc',
-    parent: 9,
+    parent: '9',
   },
   {
-    id: 12,
+    id: '12',
     title: 'Todo list for remote teams',
     icon: '☎️',
     type: 'doc',
-    parent: 9,
+    parent: '9',
   },
 ]
 
 export function toTree(nodes: Node[]): TreeData {
-  const rootId = 0
+  const rootId = '0'
   const node2item = (node: Node) => buildItem(node.id, node, parentMap.get(node.id) || [])
-  const buildItem = (id: number, data: any, children: number[]): TreeItem => ({
+  const buildItem = (id: string, data: any, children: string[]): TreeItem => ({
     id,
     children,
     hasChildren: children.length > 0,
@@ -103,7 +103,7 @@ export function toTree(nodes: Node[]): TreeData {
   })
 
   // get a map of id => children
-  const parentMap = new Map<number, number[]>()
+  const parentMap = new Map<string, string[]>()
 
   nodes.forEach(node => {
     // default parent is 0
