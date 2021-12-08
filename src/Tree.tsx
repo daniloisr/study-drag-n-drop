@@ -23,7 +23,9 @@ const MainContainer = styled.div<{ alignSections?: boolean }>`
 
 const TreeContainer = styled.div`
   display: flex;
+  flex: 1 1 auto;
   min-height: 500px;
+  height: 100%;
   overflow-y: auto;
 `
 
