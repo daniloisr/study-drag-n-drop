@@ -8,7 +8,7 @@ import Tree, {
   ItemId,
   TreeSourcePosition,
   TreeDestinationPosition,
-} from '@atlaskit/tree'
+} from '@daniloisr/react-tree'
 import { dataTree } from './dataTree'
 import { ReactComponent as CaratIcon } from './carat.svg'
 
@@ -157,7 +157,6 @@ export default function TreeApp() {
     if (!destination) {
       return
     }
-
     setTree(moveItemOnTree(tree, source, destination))
   }
 

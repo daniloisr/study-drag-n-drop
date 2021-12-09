@@ -1289,6 +1289,15 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
+"@daniloisr/react-tree@^8.4.0":
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/@daniloisr/react-tree/-/react-tree-8.4.0.tgz#465385e9097ac21c3c3dc4cee96f051964cbb74f"
+  integrity sha512-VknRCy3hDJkJ87mAgJ5f+2W/ELUIOQbZruQmg+lnNmy3un2qsT77pyfVVh4UGZ7RBBPFUMw0+CzQp+Y8wu5fIQ==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    css-box-model "^1.2.0"
+    react-beautiful-dnd-next "11.0.5"
+
 "@emotion/is-prop-valid@^0.8.8":
   version "0.8.8"
   resolved "https://registry.yarnpkg.com/@emotion/is-prop-valid/-/is-prop-valid-0.8.8.tgz#db28b1c4368a259b60a97311d6a952d4fd01ac1a"
